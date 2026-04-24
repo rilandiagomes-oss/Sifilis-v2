@@ -15,7 +15,6 @@
     hr { margin: 20px 0; border: none; border-top: 1px solid #ccc; }
     .alerta { margin-top: 15px; font-weight: bold; padding: 10px; border-radius: 5px; white-space: pre-line; }
     .alerta.positivo { background-color: #d4edda; color: #155724; }
-    .alerta.negativo { background-color: #f8d7da; color: #721c24; }
     .tratamento, .notificacao { margin-top: 15px; background-color: #e3f2fd; padding: 10px; border-radius: 5px; white-space: pre-line; }
     .subtitulo { font-weight: bold; margin-top: 10px; }
     .radio-group label { display: block; margin-top: 5px; font-weight: normal; }
@@ -118,11 +117,12 @@ function avaliar(){
     }
   }
 
-  document.getElementById("resultado").innerText="✔️ Conduta definida\n"+obs;
+  document.getElementById("resultado").innerText="✔️ Conduta definida";
   document.getElementById("resultado").className="alerta positivo";
-  document.getElementById("tratamento").innerText=esquema;
 
-  // REGRA CORRETA DE NOTIFICAÇÃO
+  // ALERTA AGORA VAI PARA BAIXO DO TRATAMENTO
+  document.getElementById("tratamento").innerText = esquema + (obs ? "\n\n" + obs : "");
+
   let notificacao="";
 
   if(gestante==="sim"){
