@@ -32,11 +32,11 @@
 
   <hr>
 
-  <label>Gestante? <span style="color:red">*</span></label>
+  <label>Situação do caso? <span style="color:red">*</span></label>
   <select id="gestante" onchange="limparResultados()">
     <option value="" selected>Selecione</option>
-    <option value="nao">Não</option>
-    <option value="sim">Sim</option>
+    <option value="nao">Pop Geral</option>
+    <option value="sim">Gestante</option>
   </select>
 
   <label>Classificação da sífilis <span style="color:red">*</span></label>
