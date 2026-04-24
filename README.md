@@ -50,7 +50,7 @@
   <input type="date" id="dose1">
 
   <div class="radio-group" id="criteriosPopGeral" style="display:none;">
-    <span class="subtitulo">População geral – Sífilis adquirida <span style="color:red">*</span>:</span>
+    <span class="subtitulo">Situação encontrada <span style="color:red">*</span>:</span>
     <label><input type="radio" name="pop_situacao" value="sit1"> Situação 1: Assintomático, com teste rápido reagente.</label>
     <label><input type="radio" name="pop_situacao" value="sit2"> Situação 2: Assintomático com VDRL reagente.</label>
     <label><input type="radio" name="pop_situacao" value="sit3"> Situação 3: Sintomático, com pelo menos um teste reagente.</label>
