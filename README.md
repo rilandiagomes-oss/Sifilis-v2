@@ -42,15 +42,16 @@
   <label>Classificação da sífilis <span style="color:red">*</span></label>
   <select id="tipo" onchange="limparResultados()">
     <option value="" selected>Selecione</option>
-    <option value="recente">Sífilis recente( Primária, secundária, latente recente ≤1 ano</option)>
+    <option value="recente">Sífilis recente (Primária, secundária, latente recente ≤1 ano)</option>
     <option value="tardia">Sífilis tardia (Latente tardia >1 ano, latente ignorada, terciária)</option>
   </select>
 
   <label>Data da 1ª dose (Penicilina Benzatina) <span style="color:red">*</span></label>
   <input type="date" id="dose1">
 
+  <!-- AGORA APARECE PARA TODOS -->
   <div class="radio-group" id="criteriosPopGeral" style="display:none;">
-    <span class="subtitulo">Situação encontrada <span style="color:red">*</span>:</span>
+    <span class="subtitulo">Situação clínica <span style="color:red">*</span>:</span>
     <label><input type="radio" name="pop_situacao" value="sit1"> Situação 1: Assintomático, com teste rápido reagente.</label>
     <label><input type="radio" name="pop_situacao" value="sit2"> Situação 2: Assintomático com VDRL reagente.</label>
     <label><input type="radio" name="pop_situacao" value="sit3"> Situação 3: Sintomático, com pelo menos um teste reagente.</label>
@@ -73,8 +74,11 @@ function limparResultados(){
   document.getElementById("resultado").className="alerta";
   document.getElementById("tratamento").innerText="";
   document.getElementById("notificacao").innerText="";
+
   const gestante=document.getElementById("gestante").value;
-  document.getElementById("criteriosPopGeral").style.display=gestante==="nao"?"block":"none";
+
+  // AGORA MOSTRA PARA QUALQUER OPÇÃO SELECIONADA
+  document.getElementById("criteriosPopGeral").style.display = gestante ? "block" : "none";
 
   document.getElementsByName("pop_situacao").forEach(r=>r.checked=false);
 }
@@ -93,16 +97,15 @@ function avaliar(){
     return;
   }
 
-  if(gestante==="nao"){
-    let marcado=false;
-    document.getElementsByName("pop_situacao").forEach(r=>{ if(r.checked) marcado=true; });
-    if(!marcado){
-      alert("⚠️ Selecione uma situação para a população geral.");
-      return;
-    }
+  // AGORA OBRIGATÓRIO PARA TODOS
+  let marcado=false;
+  document.getElementsByName("pop_situacao").forEach(r=>{ if(r.checked) marcado=true; });
+
+  if(!marcado){
+    alert("⚠️ Selecione uma situação.");
+    return;
   }
 
-  // CORREÇÃO DEFINITIVA DE DATA (sem UTC)
   const partes=d1Input.split("-");
   const d1=new Date(partes[0], partes[1]-1, partes[2]);
 
@@ -130,7 +133,7 @@ function avaliar(){
              `Dose total: 7,2 milhões UI IM`;
 
     if(gestante==="sim"){
-      obs="⚠️ Intervalo recomendado para gestante: 7 dias entre doses. Em caso de atraso, caso ultrapasse mais de 9 dias, a gestante deve ser retratada.";
+      obs="⚠️ Intervalo recomendado para gestante: 7 dias entre doses. Se ultrapassar 9 dias, deve ser retratada.";
     }
   }
 
@@ -144,30 +147,30 @@ function avaliar(){
   } else{
     const sel=[...document.getElementsByName("pop_situacao")].find(r=>r.checked)?.value;
     if(sel==="sit2"||sel==="sit3"){
-      notificacao="📌 Notificação obrigatória: SIM\nTipo: Sífilis adquirida (população geral)";
+      notificacao="📌 Notificação obrigatória: SIM\nTipo: Sífilis adquirida";
     } else {
-      notificacao="📌 Notificação obrigatória: NÃO (aguarda VDRL)\nTipo: Sífilis adquirida (população geral)";
+      notificacao="📌 Notificação obrigatória: NÃO (aguarda VDRL)\nTipo: Sífilis adquirida";
     }
   }
 
-  document.getElementById("notificacao").innerText = notificacao.replace(/<\/?div>|<\/?body>|<\/?html>/gi,"");
+  document.getElementById("notificacao").innerText = notificacao;
 }
 
 function mostrarDefinicoes(){
   alert(
-"SÍFILIS PRIMÁRIA:\nFerida geralmente única no local de entrada da bactéria.\n\n"+
+"SÍFILIS PRIMÁRIA:\nFerida única no local de entrada.\n\n"+
 "SÍFILIS SECUNDÁRIA:\nManchas no corpo, febre, ínguas.\n\n"+
-"SÍFILIS LATENTE:\nAssintomática.\nLatente recente ≤1 ano.\nLatente tardia >1 ano.\n\n"+
-"SÍFILIS TERCIÁRIA:\nLesões cutâneas, ósseas, cardiovasculares e neurológicas."
+"SÍFILIS LATENTE:\nAssintomática.\n\n"+
+"SÍFILIS TERCIÁRIA:\nComprometimento sistêmico."
   );
 }
 
 function mostrarTeste(){
   alert(
-"TESTE RÁPIDO PARA SÍFILIS:\n\n"+
-"Se reagente, confirmar com exame laboratorial.\n"+
-"No mesmo dia do início do tratamento, coletar sangue para monitoramento.\n"+
-"Pessoas tratadas podem manter teste reagente mesmo após cura."
+"TESTE RÁPIDO:\n\n"+
+"Se reagente, confirmar.\n"+
+"Coletar exame no dia.\n"+
+"Pode permanecer reagente após tratamento."
   );
 }
 </script>
