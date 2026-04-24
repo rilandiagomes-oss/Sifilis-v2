@@ -120,7 +120,6 @@ function avaliar(){
   document.getElementById("resultado").innerText="✔️ Conduta definida";
   document.getElementById("resultado").className="alerta positivo";
 
-  // ALERTA AGORA VAI PARA BAIXO DO TRATAMENTO
   document.getElementById("tratamento").innerText = esquema + (obs ? "\n\n" + obs : "");
 
   let notificacao="";
@@ -144,12 +143,24 @@ function avaliar(){
   document.getElementById("notificacao").innerText = notificacao;
 }
 
+// 🔵 DEFINIÇÕES COMPLETAS RESTAURADAS
 function mostrarDefinicoes(){
-  alert("Definições resumidas de sífilis.");
+  alert(
+"SÍFILIS PRIMÁRIA:\nFerida geralmente única no local de entrada da bactéria.\n\n"+
+"SÍFILIS SECUNDÁRIA:\nManchas no corpo, febre, ínguas.\n\n"+
+"SÍFILIS LATENTE:\nAssintomática.\nLatente recente ≤1 ano.\nLatente tardia >1 ano.\n\n"+
+"SÍFILIS TERCIÁRIA:\nLesões cutâneas, ósseas, cardiovasculares e neurológicas."
+  );
 }
 
+// 🔵 TESTE RÁPIDO RESTAURADO
 function mostrarTeste(){
-  alert("Orientações sobre teste rápido.");
+  alert(
+"TESTE RÁPIDO PARA SÍFILIS:\n\n"+
+"Se reagente, confirmar com exame laboratorial.\n"+
+"No mesmo dia do início do tratamento, coletar sangue para monitoramento.\n"+
+"Pessoas tratadas podem manter teste reagente mesmo após cura."
+  );
 }
 </script>
 
