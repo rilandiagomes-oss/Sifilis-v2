@@ -15,6 +15,7 @@
     hr { margin: 20px 0; border: none; border-top: 1px solid #ccc; }
     .alerta { margin-top: 15px; font-weight: bold; padding: 10px; border-radius: 5px; white-space: pre-line; }
     .alerta.positivo { background-color: #d4edda; color: #155724; }
+    .alerta.negativo { background-color: #f8d7da; color: #721c24; }
     .tratamento, .notificacao { margin-top: 15px; background-color: #e3f2fd; padding: 10px; border-radius: 5px; white-space: pre-line; }
     .subtitulo { font-weight: bold; margin-top: 10px; }
     .radio-group label { display: block; margin-top: 5px; font-weight: normal; }
@@ -47,7 +48,7 @@
 
   <div class="radio-group" id="criteriosPopGeral" style="display:none;">
     <span class="subtitulo">Situação clínica <span style="color:red">*</span>:</span>
-    <label><input type="radio" name="pop_situacao" value="sit1"> Assintomático, TR reagente</label>
+    <label><input type="radio" name="pop_situacao" value="sit1"> Assintomático, teste rápido reagente</label>
     <label><input type="radio" name="pop_situacao" value="sit2"> Assintomático, VDRL reagente</label>
     <label><input type="radio" name="pop_situacao" value="sit3"> Sintomático com teste reagente</label>
   </div>
@@ -90,12 +91,12 @@ function avaliar(){
 
   let marcado=false;
   document.getElementsByName("pop_situacao").forEach(r=>{ if(r.checked) marcado=true; });
+
   if(!marcado){
     alert("⚠️ Selecione uma situação.");
     return;
   }
 
-  // DATA AUTOMÁTICA (HOJE)
   const d1 = new Date();
 
   let esquema="";
@@ -113,7 +114,7 @@ function avaliar(){
              `3ª dose: ${formatarData(d3)}`;
 
     if(gestante==="sim"){
-      obs="⚠️ Intervalo ideal de 7 dias. Se >9 dias, retratar.";
+      obs="⚠️ Intervalo ideal: 7 dias. Se >9 dias, retratar.";
     }
   }
 
@@ -121,12 +122,23 @@ function avaliar(){
   document.getElementById("resultado").className="alerta positivo";
   document.getElementById("tratamento").innerText=esquema;
 
+  // REGRA CORRETA DE NOTIFICAÇÃO
   let notificacao="";
+
   if(gestante==="sim"){
-    notificacao="Notificar: Sífilis em gestante";
+    notificacao="📌 Notificação obrigatória: SIM\nTipo: Sífilis em gestante";
   } else{
     const sel=[...document.getElementsByName("pop_situacao")].find(r=>r.checked)?.value;
-    notificacao = (sel==="sit2"||sel==="sit3") ? "Notificar: Sífilis adquirida" : "Aguardar VDRL";
+
+    if(sel==="sit2"){
+      notificacao="📌 Notificação obrigatória: SIM\nCritério: VDRL reagente\nTipo: Sífilis adquirida";
+    } 
+    else if(sel==="sit3"){
+      notificacao="📌 Notificação obrigatória: SIM\nCritério: Caso sintomático\nTipo: Sífilis adquirida";
+    } 
+    else{
+      notificacao="📌 Notificação obrigatória: NÃO\nConduta: Tratar e aguardar VDRL para notificação\nTipo: Sífilis adquirida";
+    }
   }
 
   document.getElementById("notificacao").innerText = notificacao;
