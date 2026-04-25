@@ -147,7 +147,7 @@ function avaliar(){
 function mostrarDefinicoes(){
   alert(
 "SÍFILIS PRIMÁRIA:\nFerida geralmente única no local de entrada da bactéria.\n\n"+
-"SÍFILIS SECUNDÁRIA:\nManchas no corpo, febre, ínguas.\n\n"+
+"SÍFILIS SECUNDÁRIA:\nManchas no corpo, febre, gânglios infartados.\n\n"+
 "SÍFILIS LATENTE:\nAssintomática.\nLatente recente ≤1 ano.\nLatente tardia >1 ano.\n\n"+
 "SÍFILIS TERCIÁRIA:\nLesões cutâneas, ósseas, cardiovasculares e neurológicas."
   );
